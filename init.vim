@@ -170,7 +170,7 @@ function! OpenTerm() abort
 	:res -10
 	term
 endfunction
-
+nmap <leader>t :term<CR>
 " ===
 " === 自动注释
 " ===
@@ -377,7 +377,7 @@ Plug 'github/copilot.vim', {'do': ':Copilot setup'}
 
 
 " Bookmarks
-Plug 'MattesGroeger/vim-bookmarks'
+" Plug 'MattesGroeger/vim-bookmarks'
 
 " API 调试
 Plug 'diepm/vim-rest-console'
@@ -509,7 +509,7 @@ let NERDTreeShowHidden=1
 map <space>nt :NERDTreeToggle<CR><C-w>p
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-autocmd VimEnter * execute("NERDTree")
+" autocmd VimEnter * execute("NERDTree")
 "Show line number.
 let g:NERDTreeShowlineNumber=1
 
@@ -876,14 +876,6 @@ function! s:delete_buffers(lines)
 	execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
 endfunction
 
-command! BD call fzf#run(fzf#wrap({
-			\ 'source': s:list_buffers(),
-			\ 'sink*': { lines -> s:delete_buffers(lines) },
-			\ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
-			\ }))
-
-"noremap <c-d> :BD<CR>
-
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
 " ===
@@ -917,31 +909,6 @@ nnoremap <space>tp :FloatermPrev<CR>
 nnoremap <space>th :FloatermHide<CR>
 nnoremap <space>tk :FloatermKill<CR>
 nnoremap <space>ts :FloatermSend<CR>
-
-
-
-" ===
-" === vim-bookmarks
-" ===
-let g:bookmark_no_default_key_mappings = 1
-nmap mt <Plug>BookmarkToggle
-"nmap ma <Plug>BookmarkAnnotate
-"nmap ml <Plug>BookmarkShowAll
-nmap mh <Plug>BookmarkNext
-nmap ml <Plug>BookmarkPrev
-nmap mc <Plug>BookmarkClear
-"nmap mx <Plug>BookmarkClearAll
-"nmap mu <Plug>BookmarkMoveUp
-"nmap me <Plug>BookmarkMoveDown
-"nmap <Leader>g <Plug>BookmarkMoveToLine
-let g:bookmark_save_per_working_dir = 1
-let g:bookmark_auto_save = 1
-let g:bookmark_highlight_lines = 1
-let g:bookmark_manage_per_buffer = 1
-let g:bookmark_save_per_working_dir = 1
-let g:bookmark_center = 1
-let g:bookmark_auto_close = 1
-let g:bookmark_location_list = 1
 
 " ===
 " === nvim-treesitter
