@@ -48,7 +48,7 @@ nnoremap < <<
 nnoremap > >>
 
 map <c-c> :qa<CR>
-map <c-a> ggVG
+" map <c-a> ggVG
 
 nnoremap <space>w <C-w>
 
@@ -68,8 +68,14 @@ nnoremap tc :tabclose<CR>
 " ===
 " === Buffer Maps
 " ===
-nnoremap bn :bnext<CR>
-nnoremap bp :bprevious<CR>
+nnoremap <space>bn :bnext<CR>
+nnoremap <space>bp :bprevious<CR>
+
+" ===
+" === Plug Maps
+" ===
+nnoremap pi :PlugInstall<CR>
+nnoremap pu :PlugUpdate<CR>
 
 " ===
 " === Terminal
@@ -208,6 +214,11 @@ func! CompileRunGcc()
 		:term python3 %
 	elseif &filetype == 'markdown'
 		exec "MarkdownPreview"
+	elseif &filetype == 'scala'
+		set splitbelow
+		:sp
+		:res -5
+		:term scala %
 	endif
 endfunc
 
@@ -351,7 +362,14 @@ Plug 'neoclide/coc-git', {'do': 'yarn install'}
 
 Plug 'honza/vim-snippets'
 
+" ===
+" === LSP
+" ===
 
+" Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'prabirshrestha/vim-lsp'
+Plug 'natebosch/vim-lsc'
+Plug 'neovim/nvim-lsp'
 
 Plug 'fadein/vim-FIGlet'
 
@@ -825,6 +843,7 @@ let g:coc_global_extensions = [
 			\ 'coc-jest',
 			\ 'coc-json',
 			\ 'coc-lists',
+			\ 'coc-metals',
 			\ 'coc-omnisharp',
 			\ 'coc-prettier',
 			\ 'coc-prisma',
@@ -842,6 +861,7 @@ let g:coc_global_extensions = [
 			\ 'coc-tsserver',
 			\ 'coc-vetur',
 			\ 'coc-vimlsp',
+			\ 'coc-xml',
 			\ 'coc-yaml',
 			\ 'coc-yank']
 
@@ -992,3 +1012,16 @@ let g:lighttree_java_server_name = 'jdt.ls'
 
 " map a function to start (not do in the plugin):
 autocmd FileType java nnoremap <silent> <space>l <cmd>call lighttree#plugin#jdt#toggle_win()<cr>
+
+
+" ===
+" === LanguageClient-neovim
+" ===
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'python': ['/usr/local/bin/pyls'],
+    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+    \ }
+
